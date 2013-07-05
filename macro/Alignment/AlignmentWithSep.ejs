@@ -31,13 +31,13 @@ function alignment(sep) {
     if (!hasSel()) {
         return;
     }
-	
+    
     var startLine = getSelStartPos().Line;
     var startCol = 0;
     var endLine = getSelEndPos().Line;
     var endCol = getLineText(endLine).length;
     setSel(startLine, startCol, endLine, endCol);
-	
+    
     var sel = getSel();
     sep = regexEscape(sep);
     var regex = "^([\\s]*)(.*?)([\\s]*)" + sep + "([\\s]*)(.*?)([\\s]*)$";
@@ -45,7 +45,7 @@ function alignment(sep) {
     if (re.exec(sel) == null) {
         return;
     }
-
+    
     re = new RegExp(regex, "gm");
     var maxlen = 0;
     var arr = [];
@@ -64,15 +64,15 @@ function alignment(sep) {
     var selLines = sel.split(linesep);
     var i = 0;
     for (; i < selLines.length; i++) {
-	    var line = selLines[i];
-	    re = new RegExp(regex, "g");
-	    arr = re.exec(line);
-	    if (arr != null) {
-        	list.push(indent + arr[2] + space(maxlen - getDisplayLength(arr[2])) + " " + sep + " " + arr[5]);
-	    }
-	    else {
-		    list.push(indent + trim(line).replace(/(\r\n)|(\r)|(\n)/g, ""));
-	    }
+        var line = selLines[i];
+        re = new RegExp(regex, "g");
+        arr = re.exec(line);
+        if (arr != null) {
+            list.push(indent + arr[2] + space(maxlen - getDisplayLength(arr[2])) + " " + sep + " " + arr[5]);
+        }
+        else {
+            list.push(indent + trim(line).replace(/(\r\n)|(\r)|(\n)/g, ""));
+        }
     }
     setSelText(list.join(linesep));
 }
@@ -83,8 +83,8 @@ function alignmentWithSep() {
         return;
     }
     if (sep.search(/\s/igm) != -1) {
-	    alert("The separator shouldn't include space letters (regular expression \s).");
-	    return;
+        alert("The separator shouldn't include space letters (regular expression \s).");
+        return;
     }
     alignment(sep);
 }
