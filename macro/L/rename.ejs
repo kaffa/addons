@@ -1,0 +1,39 @@
+/*
+  rename for EverEdit
+  -------------------
+    Save current file as a new one, and delete the old using FileSystemObject.
+    Written by Kaffa (kaffacoffee@outlook.com)
+    Homepage: http://forum.everedit.net/
+    20130708230615
+*/
+Include(App.AppPath + "\\macro\\L\\wrapper.js");
+Include(App.AppPath + "\\macro\\L\\common.js");
+
+(function rename() {
+    var old = App.ActiveDoc.PathName;
+    if (old.indexOf(":") == "-1") {
+        alert("文件未保存");
+        return;
+    }
+    try {
+        // if [cancel], how to know?
+        App.SendCommandEx("cm_file_saveas");
+    }
+    catch (e) {
+        return;
+    }
+	if (App.ActiveDoc.PathName == old) {
+	    alert("新文件名和旧文件名相同！");
+        return;
+	}
+    if (fileExists(App.ActiveDoc.PathName)) {
+        deleteFile(old);
+    }
+})();
+
+
+
+
+
+
+
