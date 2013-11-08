@@ -195,7 +195,7 @@ function insertDateTimeKaffa() {
 //{"Zap all characters to space",pfzapspace,0,FALSE NPPPLUGINACCELERATOR(NULL)},
 //{"Zap all non printable characters to #",pfzapnonprint,0,FALSE NPPPLUGINACCELERATOR(NULL)},
 
-//{"Q:Mark Word or Find Reverse"/*" ·±ÌåÖ§³Ö"*/,pfMarkWordFindReverse,0,FALSE NPPPLUGINACCELERATOR(&skMarkWordFindReverse)},
+//{"Q:Mark Word or Find Reverse"/*" ï¿½ï¿½ï¿½ï¿½Ö§ï¿½ï¿½"*/,pfMarkWordFindReverse,0,FALSE NPPPLUGINACCELERATOR(&skMarkWordFindReverse)},
 //{"Q:Mark Word or Find Forward",pfMarkWordFindForward,0,FALSE  NPPPLUGINACCELERATOR(&skMarkWordFindForward)},
 //{"Q:+Mark Word or Find Case Sensitive",pfMarkWordFindCaseSensitive,0,FALSE NPPPLUGINACCELERATOR(NULL)},
 //{"Q:+Mark Word or Find Whole Words",pfMarkWordFindWholeWord,0,FALSE NPPPLUGINACCELERATOR(NULL)},
@@ -380,13 +380,20 @@ function insertDateTimeKaffa() {
 //};
 
 function getPopupFn(items) {
-    var menu = App.ActiveDoc.CreateMenu();
-    for (key in items) {
-        menu.AddItem(key, items[key].text);
-    }
-    var cmd = menu.Popup();
-    if (cmd == undefined) {
+    if (items.length <= 0) {
         return;
     }
-    return items[cmd].fn;
+    var menu = App.ActiveDoc.CreateMenu();
+    for (key in items) {
+        var cmd = parseInt(key) + 1;
+        menu.AddItem(cmd, items[key].text);
+    }
+    var chosen = menu.Popup();
+    if (chosen == undefined) {
+        return;
+    }
+    if (chosen <= 0) {
+        return;
+    }
+    return items[chosen - 1].fn;
 }
