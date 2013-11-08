@@ -380,8 +380,9 @@ function insertDateTimeKaffa() {
 //};
 
 function getPopupFn(items) {
+    var fn = function(){};
     if (items.length <= 0) {
-        return;
+        return fn;
     }
     var menu = App.ActiveDoc.CreateMenu();
     for (key in items) {
@@ -390,10 +391,10 @@ function getPopupFn(items) {
     }
     var chosen = menu.Popup();
     if (chosen == undefined) {
-        return;
+        return fn;
     }
     if (chosen <= 0) {
-        return;
+        return fn;
     }
     return items[chosen - 1].fn;
 }
